@@ -7,7 +7,7 @@ Ce projet est un **jeu de rôle textuel en Java** où le joueur peut créer ou c
 Le jeu se déroule sur un plateau linéaire de 10 cases, où le joueur et le monstre s’affrontent à chaque tour.
 
 Le projet inclut :
-- Création et gestion de personnages (Guerrier et Mage)
+- Création et gestion de personnages (Guerrier, Mage et Assassin)
 - Gestion d’un bestiaire de monstres à partir d’un fichier CSV
 - Système de combat au tour par tour avec attaques, déplacement et défense
 - Système d’expérience et montée de niveau
