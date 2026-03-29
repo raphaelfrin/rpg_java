@@ -1,19 +1,18 @@
 package rpg_java.Combat;
-
 import rpg_java.personnage.Personnage;
 import rpg_java.pnj.Monstre;
-
 import java.util.Scanner;
 
 public class TourJoueur {
     protected static boolean avanceJoueur = false;
-    protected static boolean jourJoueur(Personnage perso, MonstreEnCombat monstre, Scanner scanner, int posJ, int posM) {
+
+    protected static ResultatTour tourJoueur(Personnage perso, MonstreEnCombat monstre, Scanner scanner, int posJ, int posM) {
         boolean defenseActive = false;
-        avanceJoueur = false;
+        int Distance = 0;
 
         System.out.println("\nActions disponibles :");
         System.out.println("1 - Attaquer");
-        System.out.println("2 - Avancer");
+        System.out.println("2 - Se déplacer");
         System.out.println("3 - Défendre");
         System.out.print("Choix : ");
 
@@ -24,7 +23,7 @@ public class TourJoueur {
             choix = Integer.parseInt(input);
         } catch (NumberFormatException e) {
             System.out.println("Erreur : vous devez entrer un nombre.");
-            return false;
+            return new ResultatTour(false, 0);
         }
 
         switch (choix) {
@@ -54,7 +53,7 @@ public class TourJoueur {
                 int distance = posM - posJ;
 
                 if (distance >= attaque.getPorteeMin() && distance <= attaque.getPorteeMax()) {
-                    int degats = (int) (Math.max(1, perso.getAtq() * attaque.getBonusDegats()-monstre.getDef()));
+                    int degats = (int) (Math.max(1, perso.getAtq() * attaque.getBonusDegats() - monstre.getDef()));
                     monstre.setPv(monstre.getPv() - degats);
                     System.out.println("Vous infligez " + degats + " dégâts !");
                 } else {
@@ -63,12 +62,43 @@ public class TourJoueur {
                 break;
 
             case 2:
-                if (posJ + 1 < posM) {
-                    avanceJoueur = true;
-                    System.out.println("Vous avancez d'une case.");
-                } else {
-                    System.out.println("Impossible d'avancer, le monstre est trop proche !");
+                System.out.println("1 - avancer");
+                System.out.println("2 - reculer");
+                System.out.print("Votre choix : ");
+                int deplacer;
+                try {
+                    deplacer = Integer.parseInt(scanner.nextLine());
+                }  catch (NumberFormatException e) {
+                    System.out.println("Déplacement non valide !");
+                    break;
                 }
+                Deplacement[] deplacements = getDeplacementJoueur(perso);
+                int deplacementChoix;
+                if (deplacements.length > 1) {
+                    System.out.println("Choisissez une methode de déplacement :");
+                    for (int i = 0; i < deplacements.length; i++) {
+                        System.out.println((i + 1) + " - " + deplacements[i].getNom()
+                                + " (Distance: " + deplacements[i].getDistance() + ")");
+                    }
+                    System.out.print("Votre choix : ");
+                    try {
+                        deplacementChoix = Integer.parseInt(scanner.nextLine()) - 1;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Le déplacement est invalide !");
+                        break;
+                    }
+                } else {
+                    deplacementChoix = 0;
+                }
+                if (deplacementChoix < 0 || deplacementChoix >= deplacements.length) {
+                    System.out.println("Déplacement invalide !");
+                    break;
+                }
+
+                Deplacement deplacement = deplacements[deplacementChoix];
+                if (deplacer == 2) {
+                    Distance = -deplacement.getDistance();
+                } else Distance = deplacement.getDistance();
                 break;
 
             case 3:
@@ -80,22 +110,41 @@ public class TourJoueur {
                 System.out.println("Choix invalide.");
         }
 
-        return defenseActive;
+        return new ResultatTour(defenseActive, Distance);
     }
+
 
     private static Attaque[] getAttaquesJoueur(Personnage perso) {
         if (perso.getClasse().equals("Guerrier")) {
             return new Attaque[]{
-                    new Attaque("Coup d'épée", 1, 1, 1.1),
-                    new Attaque("Arc", 2, 3, 1)
+                    new Attaque("Coup d'épée", 1, 1, 1.2),
+                    new Attaque("Arc", 2, 4, 0.8)
             };
         } else if (perso.getClasse().equals("Mage")) {
             return new Attaque[]{
                     new Attaque("Projectile magique", 1, 2, 1.3),
-                    new Attaque("Boule de feu", 2, 5, 1.1)
+                    new Attaque("Boule de feu", 2, 5, 1)
+            };
+        } else if (perso.getClasse().equals("Assassin")) {
+            return new Attaque[]{
+                    new Attaque("cout de couteau", 1, 1, 1.3),
+                    new Attaque("lancer de couteau", 2, 3, 0.7)
             };
         } else {
             return new Attaque[0];
+        }
+    }
+
+    private static Deplacement[] getDeplacementJoueur(Personnage perso) {
+        if (perso.getClasse().equals("Assassin")) {
+            return new Deplacement[]{
+                    new Deplacement("marche", 1),
+                    new Deplacement("dash", 3)
+            };
+        } else {
+            return new Deplacement[]{
+                    new Deplacement("avancer", 1)
+            };
         }
     }
 }

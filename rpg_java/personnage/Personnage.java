@@ -66,16 +66,22 @@ public class Personnage {
         // Augmentation des stats selon la classe
         switch (classe) {
             case "Guerrier":
-                pv += 10;          // +20 PV max
+                pv += 10;          // 10 PV max
                 pvActuel = pv;     // restauration automatique
-                atq += 2;          // +5 ATQ
-                def += 2;          // +3 DEF
+                atq += 2;          // +2 ATQ
+                def += 2;          // +2 DEF
                 break;
             case "Mage":
-                pv += 5;          // +10 PV max
+                pv += 5;
                 pvActuel = pv;
-                atq += 5;          // +7 ATQ
-                def += 0;          // +1 DEF
+                atq += 5;
+                def += 0;
+                break;
+            case "Assassin":
+                pv += 3;
+                pvActuel = pv;
+                atq += 6;
+                def += 1;
                 break;
             default:
                 // classes futures

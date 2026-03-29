@@ -4,8 +4,8 @@ public class Mage extends Personnage {
 
     public Mage(String nom) {
         super(nom, "Mage",
-                30,   // PV max
-                10,   // ATQ
-                1);   // DEF
+                10,   // PV max
+                5,   // ATQ
+                0);   // DEF
     }
 }

@@ -1,6 +1,8 @@
 package rpg_java.menu;
 
 import java.util.Scanner;
+
+import rpg_java.personnage.Assassin;
 import rpg_java.personnage.Personnage;
 import rpg_java.personnage.Guerrier;
 import rpg_java.personnage.Mage;
@@ -25,6 +27,7 @@ public class CreationPersonnage {
             System.out.println("Choisissez la classe :");
             System.out.println("1 - Guerrier");
             System.out.println("2 - Mage");
+            System.out.println("3 - Assassin");
             System.out.println("Tapez 'quit' pour annuler");
             System.out.print("Choix : ");
 
@@ -41,6 +44,7 @@ public class CreationPersonnage {
                 switch (classeChoix) {
                     case 1: perso = new Guerrier(nom); break;
                     case 2: perso = new Mage(nom); break;
+                    case 3: perso = new Assassin(nom); break;
                     default: System.out.println("Classe invalide."); continue;
                 }
 

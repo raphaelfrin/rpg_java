@@ -4,8 +4,8 @@ public class Guerrier extends Personnage {
 
     public Guerrier(String nom) {
         super(nom, "Guerrier",
-                50,   // PV max
+                15,   // PV max
                 5,   // ATQ
-                5);   // DEF );
+                2);   // DEF );
     }
 }

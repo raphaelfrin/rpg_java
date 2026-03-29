@@ -22,6 +22,7 @@ public class Combat {
             int posJ = 0;
             int posM = taillePlateau - 1;
             boolean joueurDefense = false;
+            int Distance;
 
             System.out.println("Un monstre apparaît !");
             System.out.println(monstre);
@@ -34,11 +35,13 @@ public class Combat {
                 afficherEtat(perso, monstre);
 
                 // 2️⃣ Tour du joueur
-                joueurDefense = TourJoueur.jourJoueur(perso, monstre, scanner, posJ, posM);
+                ResultatTour resultat = TourJoueur.tourJoueur(perso, monstre, scanner, posJ, posM);
+                joueurDefense = resultat.isDefenseActive();
+                Distance = resultat.getDistance();
 
-                // Appliquer déplacement joueur si choisi
-                if (TourJoueur.avanceJoueur && posJ + 1 < posM)
-                    posJ++;
+                if (posJ + Distance < posM && posJ + Distance >= 0) {
+                    posJ += Distance;
+                } else System.out.println("Déplacement impossible !");
 
                 if (monstre.getPv() <= 0) {
                     System.out.println("\nLe monstre est vaincu !");
@@ -57,7 +60,7 @@ public class Combat {
                 if (distance <= 1) {
                     int defence;
                     if (joueurDefense) {
-                        defence =perso.getDef()*2;
+                        defence = perso.getDef()*2;
                         System.out.println("Défense active ! Dégâts réduits.");
                         joueurDefense = false;
                     }else {

@@ -32,16 +32,20 @@ src/
 │ ├─ personnage/
 │ │ ├─ Personnage.java
 │ │ ├─ Guerrier.java
-│ │ └─ Mage.java
+│ │ ├─ Mage.java
+│ │ └─ Assassin.java
 │ ├─ pnj/
 │ │ ├─ Monstre.java
 │ │ ├─ UtilsMonstre.java
 │ │ └─ monstres.csv
 │ ├─ Combat/
+│ │ ├─ Attaque.java
 │ │ ├─ Combat.java
-│ │ ├─ TourJoueur.java
+│ │ ├─ Deplacement.java
 │ │ ├─ MonstreEnCombat.java
-│ │ └─ Plateau.java
+│ │ ├─ Plateau.java
+│ │ ├─ ResultatTour.java
+│ │ └─ TourJoueur.java
 │ ├─ sauvegarde/
 │ │ └─ Sauvegarde.java
 │ ├─ save/
@@ -56,7 +60,7 @@ src/
 ## Fonctionnalités
 
 ### Menu Principal
-- Créer un personnage (Guerrier ou Mage)
+- Créer un personnage (Guerrier, Mage ou Assassin)
 - Charger un personnage existant
 - Quitter le jeu
 
@@ -65,7 +69,7 @@ src/
 - Le joueur commence en case 0, le monstre en case 9
 - Actions du joueur :
     - **Attaquer** : plusieurs attaques selon la classe, avec portée et bonus de dégâts
-    - **Avancer** : déplacer d’une case vers le monstre
+    - **Se déplacer** : déplacer d’une case vers le monstre
     - **Défendre** : augmenter temporairement la défense pour le prochain tour
 - Tour du monstre :
     - S'il est à portée, attaque le joueur
@@ -97,21 +101,8 @@ src/
 
 ---
 
-## Format du fichier CSV des monstres
-Fichier : `monstres.csv` (dans `rpg_java/pnj/`)
-
-| Nom     | NiveauMin | NiveauMax | PV  | ATQ | DEF |
-|---------|-----------|-----------|-----|-----|-----|
-| Rat     | 1         | 2         | 8   | 3   | 1   |
-| Gobelin | 1         | 3         | 12  | 4   | 2   |
-| Loup    | 2         | 4         | 16  | 5   | 2   |
-| Orc     | 3         | 6         | 22  | 7   | 3   |
-| Troll   | 5         | 9         | 30  | 9   | 4   |
-
----
-
 ## Technologies
 
 - Java 17+
 - IntelliJ IDEA
-- CSV pour la liste des monstres
+- CSV pour la liste des monstres et txt pour la save

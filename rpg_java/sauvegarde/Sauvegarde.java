@@ -51,14 +51,15 @@ public class Sauvegarde {
 
             reader.close();
 
-            Personnage perso;
+            Personnage perso = null;
 
             if (classe.equals("Guerrier")) {
                 perso = new Guerrier(nomPerso);
-            } else {
+            } else if (classe.equals("Mage")) {
                 perso = new Mage(nomPerso);
+            } else if (classe.equals("Assassin")) {
+                perso = new Assassin(nomPerso);
             }
-
             perso.setPv(pv);
             perso.setPvActuel(pvActuel);
             perso.setAtq(atq);
